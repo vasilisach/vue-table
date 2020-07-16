@@ -50,7 +50,7 @@ export default {
     },
     data(){
         return {
-            usersPerPage: 10,
+            usersPerPage: 50,
             pageNumber: 1,
             currentSort:'',
             sortColumn:'',
@@ -63,7 +63,7 @@ export default {
             if(this.searchQuery){
                 users = this.users_data.filter(item=>this.searchQuery.toLowerCase().split(' ').every(v => item.firstName.toLowerCase().includes(v)))
             }
-            return Math.ceil(users.length / 10)
+            return Math.ceil(users.length / this.usersPerPage)
         },
         paginatedUsers(){
             let users = this.users_data
