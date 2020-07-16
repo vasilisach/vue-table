@@ -1,5 +1,6 @@
 <template>
     <div class="v-table">
+        <input type="text" v-model="searchQuery" placeholder="Search" />
         <div class="table-header">
             <p @click="sort('firstName')">First Name
                 <i class="material-icons">{{sortColumn==='firstName' && currentSort? currentSort : 'arrow_drop_up'}}</i>
@@ -53,17 +54,25 @@ export default {
             pageNumber: 1,
             currentSort:'',
             sortColumn:'',
-            selectedRow: {}
+            searchQuery:'',
         }
     },
     computed:{
         pages(){
-            return Math.ceil(this.users_data.length / 10)
+            let users = this.users_data
+            if(this.searchQuery){
+                users = this.users_data.filter(item=>this.searchQuery.toLowerCase().split(' ').every(v => item.firstName.toLowerCase().includes(v)))
+            }
+            return Math.ceil(users.length / 10)
         },
         paginatedUsers(){
+            let users = this.users_data
+            if(this.searchQuery){
+                users = this.users_data.filter(item=>this.searchQuery.toLowerCase().split(' ').every(v => item.firstName.toLowerCase().includes(v)))
+            }
             let from = (this.pageNumber -1) * this.usersPerPage
             let to = from + this.usersPerPage
-            return this.users_data.slice(from, to)
+            return users.slice(from, to)
         }
     },
     methods:{
