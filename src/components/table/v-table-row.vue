@@ -1,9 +1,11 @@
 <template>
-    <div class="v-table-row" ref='row' :class="{'selected-row': selectedRow}" @click="getRowData(row_data)">
-        <div class="cell cell-firstname">{{row_data.firstName}}</div>
-        <div class="cell cell-lastname">{{row_data.lastName}}</div>
-        <div class="cell cell-email">{{row_data.email}}</div>
-        <div class="cell cell-phone">{{row_data.phone}}</div>
+    <div class="v-table-row" 
+        :class="{'selected-row': selectedRow}" 
+        @click="getRowData(row_data)">
+            <div class="cell cell-firstname">{{row_data.firstName}}</div>
+            <div class="cell cell-lastname">{{row_data.lastName}}</div>
+            <div class="cell cell-email">{{row_data.email}}</div>
+            <div class="cell cell-phone">{{row_data.phone}}</div>
     </div>
 </template>
 

@@ -2,17 +2,29 @@
     <div class="v-table">
         <input type="text" v-model="searchQuery" placeholder="Search" />
         <div class="table-header">
-            <p @click="sort('firstName')">First Name
-                <i class="material-icons">{{sortColumn==='firstName' && currentSort? currentSort : 'arrow_drop_up'}}</i>
+            <p @click="sort('firstName')">
+                First Name
+                <i class="material-icons">
+                    {{sortColumn==='firstName' && currentSort? currentSort : 'arrow_drop_up'}}
+                </i>
             </p>
-            <p @click="sort('lastName')">Last Name
-                <i class="material-icons">{{sortColumn==='lastName' && currentSort? currentSort: 'arrow_drop_up'}}</i>
+            <p @click="sort('lastName')">
+                Last Name
+                <i class="material-icons">
+                    {{sortColumn==='lastName' && currentSort? currentSort: 'arrow_drop_up'}}
+                </i>
             </p>
-            <p @click="sort('email')">Email
-                <i class="material-icons">{{sortColumn==='email' && currentSort? currentSort: 'arrow_drop_up'}}</i>
+            <p @click="sort('email')">
+                Email
+                <i class="material-icons">
+                    {{sortColumn==='email' && currentSort? currentSort: 'arrow_drop_up'}}
+                </i>
             </p>
-            <p @click="sort('phone')">Phone
-                <i class="material-icons">{{sortColumn==='phone' && currentSort? currentSort: 'arrow_drop_up'}}</i>
+            <p @click="sort('phone')">
+                Phone
+                <i class="material-icons">
+                    {{sortColumn==='phone' && currentSort? currentSort: 'arrow_drop_up'}}
+                </i>
             </p>
         </div>
         <div class="table-body">
@@ -50,7 +62,7 @@ export default {
     },
     data(){
         return {
-            usersPerPage: 50,
+            usersPerPage: 10,
             pageNumber: 1,
             currentSort:'',
             sortColumn:'',
@@ -60,18 +72,27 @@ export default {
     computed:{
         pages(){
             let users = this.users_data
+
             if(this.searchQuery){
-                users = this.users_data.filter(item=>this.searchQuery.toLowerCase().split(' ').every(v => item.firstName.toLowerCase().includes(v)))
+                users = this.users_data.filter(
+                    item => this.searchQuery.toLowerCase().split(' ').every(v => item.firstName.toLowerCase().includes(v))
+                )
             }
+
             return Math.ceil(users.length / this.usersPerPage)
         },
         paginatedUsers(){
             let users = this.users_data
+
             if(this.searchQuery){
-                users = this.users_data.filter(item=>this.searchQuery.toLowerCase().split(' ').every(v => item.firstName.toLowerCase().includes(v)))
+                users = this.users_data.filter(
+                    item => this.searchQuery.toLowerCase().split(' ').every(v => item.firstName.toLowerCase().includes(v))
+                )
             }
+
             let from = (this.pageNumber -1) * this.usersPerPage
             let to = from + this.usersPerPage
+
             return users.slice(from, to)
         }
     },
@@ -81,6 +102,7 @@ export default {
         },
         sort(columnName){
             this.sortColumn = columnName
+
             if(!this.currentSort || this.currentSort === 'arrow_drop_down'){
                 this.users_data.sort((a,b)=>a[columnName].localeCompare(b[columnName]))
                 this.currentSort = 'arrow_drop_up'

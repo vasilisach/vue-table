@@ -11,7 +11,9 @@ const store = new Vuex.Store({
     },
     actions: {
         GET_USERS({ commit }) {
-            return axios('http://www.filltext.com/?rows=100&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}', {
+            let url = 'http://www.filltext.com/?rows=100&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}'
+            
+            return axios(url, {
                 method: 'GET'
             })
             .then(response => {
