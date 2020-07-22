@@ -17,8 +17,7 @@
                 v-for="row in paginatedUsers"
                 :key="row.id"
                 :row_data="row"
-                :selected_row = "selectedRow === row.id"
-                @tableRowClicked = "clickOnTableRow"
+                :selected_row = "selected_user_data.id === row.id"
             />
         </div>
         <div class="table-pagination">
@@ -45,6 +44,12 @@ export default {
             default: ()=>{
                 return []
             }
+        },
+        selected_user_data:{
+            type: Object,
+            default:() => {
+                return {}
+            }
         }
     },
     data(){
@@ -54,7 +59,6 @@ export default {
             currentSort:'',
             sortColumn:'',
             searchQuery:'',
-            selectedRow: '',
             columnHeaders: ['firstName', 'lastName', 'email', 'phone']
         }
     },
@@ -104,9 +108,6 @@ export default {
                     this.currentSort = 'arrow_drop_down'
                 }
             }
-        },
-        clickOnTableRow(rowId){
-            this.selectedRow = rowId
         }
     }
 }

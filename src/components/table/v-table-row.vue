@@ -32,7 +32,6 @@ export default {
     },
     methods:{
         getRowData(rowData){
-            this.$emit('tableRowClicked', rowData.id)
             this.$store.commit('SELECT_USER', rowData)
         }
     }

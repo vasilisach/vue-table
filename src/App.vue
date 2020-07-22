@@ -2,9 +2,10 @@
   <div id="app">
     <v-table
       :users_data="USERS"
+      :selected_user_data="SELECTED_USER"
     />
     <v-user-detale
-      :user_data="SELECTED_USER"
+      :selected_user_data="SELECTED_USER"
     />
   </div>
 </template>
