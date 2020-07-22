@@ -2,28 +2,13 @@
     <div class="v-table">
         <input type="text" v-model="searchQuery" placeholder="Search" />
         <div class="table-header">
-            <p @click="sort('firstName')">
-                First Name
+            <p 
+            v-for="headerName in columnHeaders"
+            :key="headerName"
+            @click="sort(headerName)">
+                {{headerName}}
                 <i class="material-icons">
-                    {{sortColumn==='firstName' && currentSort? currentSort : 'arrow_drop_up'}}
-                </i>
-            </p>
-            <p @click="sort('lastName')">
-                Last Name
-                <i class="material-icons">
-                    {{sortColumn==='lastName' && currentSort? currentSort: 'arrow_drop_up'}}
-                </i>
-            </p>
-            <p @click="sort('email')">
-                Email
-                <i class="material-icons">
-                    {{sortColumn==='email' && currentSort? currentSort: 'arrow_drop_up'}}
-                </i>
-            </p>
-            <p @click="sort('phone')">
-                Phone
-                <i class="material-icons">
-                    {{sortColumn==='phone' && currentSort? currentSort: 'arrow_drop_up'}}
+                    {{sortColumn===headerName && currentSort? currentSort : 'arrow_drop_up'}}
                 </i>
             </p>
         </div>
@@ -32,12 +17,14 @@
                 v-for="row in paginatedUsers"
                 :key="row.id"
                 :row_data="row"
+                :selected_row = "selectedRow === row.id"
+                @tableRowClicked = "clickOnTableRow"
             />
         </div>
         <div class="table-pagination">
             <div class="page" 
             v-for="page in pages" 
-            :key="page" 
+            :key="page+'Numer'" 
             :class="{'page-selected': page === pageNumber}"
             @click="pageClick(page)">{{page}}</div>
         </div>
@@ -67,6 +54,8 @@ export default {
             currentSort:'',
             sortColumn:'',
             searchQuery:'',
+            selectedRow: '',
+            columnHeaders: ['firstName', 'lastName', 'email', 'phone']
         }
     },
     computed:{
@@ -77,13 +66,16 @@ export default {
                 users = this.users_data.filter(
                     item => this.searchQuery.toLowerCase().split(' ').every(v => item.firstName.toLowerCase().includes(v))
                 )
+                if(this.pageNumber > Math.ceil(users.length / this.usersPerPage)){
+                    this.pageNumber = Math.ceil(users.length / this.usersPerPage)
+                }
             }
 
             return Math.ceil(users.length / this.usersPerPage)
         },
         paginatedUsers(){
             let users = this.users_data
-
+1
             if(this.searchQuery){
                 users = this.users_data.filter(
                     item => this.searchQuery.toLowerCase().split(' ').every(v => item.firstName.toLowerCase().includes(v))
@@ -113,6 +105,9 @@ export default {
                 }
             }
         },
+        clickOnTableRow(rowId){
+            this.selectedRow = rowId
+        }
     }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="v-table-row" 
-        :class="{'selected-row': selectedRow}" 
+        :class="{'selected': selected_row}" 
         @click="getRowData(row_data)">
             <div class="cell cell-firstname">{{row_data.firstName}}</div>
             <div class="cell cell-lastname">{{row_data.lastName}}</div>
@@ -18,18 +18,22 @@ export default {
             default:() => {
                 return {}
             }
+        },
+        selected_row: {
+            type: Boolean,
+            default: () => {
+                return false
+            }
         }
     },
     data(){
         return {
-            selectedRow: false
         }
     },
     methods:{
         getRowData(rowData){
-            this.$parent.$children.map(el=>{el.selectedRow = false})
+            this.$emit('tableRowClicked', rowData.id)
             this.$store.commit('SELECT_USER', rowData)
-            this.selectedRow = !this.selectedRow
         }
     }
 }
@@ -46,7 +50,7 @@ export default {
         padding: 5px 10px;
         text-align: left;
     }
-    .selected-row{
+    .selected{
         background: red;
     }
 </style>
